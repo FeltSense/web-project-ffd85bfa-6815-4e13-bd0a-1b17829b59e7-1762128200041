@@ -1,0 +1,192 @@
+{
+  "componentsToGenerate": [
+    "Navigation - Sticky header with logo, nav links, and CTA buttons",
+    "Hero - Full-width hero section with background image, headline, subheadline, and dual CTAs",
+    "FeaturedDishes - Carousel or grid of signature dishes with images and descriptions",
+    "AboutSection - Restaurant story with image and text layout",
+    "StatsSection - Quick stats display with animated counters",
+    "TestimonialsCarousel - Customer reviews with star ratings and photos",
+    "CTABanner - Full-width call-to-action sections for ordering and reservations",
+    "MenuCategory - Menu section navigation and filtering",
+    "MenuItem - Individual dish card with image, name, description, price, dietary icons",
+    "OrderCart - Shopping cart sidebar with item list and totals",
+    "OrderForm - Multi-step ordering form with customization options",
+    "ReservationForm - Date/time picker with party size and special requests",
+    "ContactForm - Standard contact form with validation",
+    "LocationMap - Embedded map with directions and details",
+    "HoursDisplay - Operating hours with daily breakdown",
+    "Footer - Multi-column footer with links, contact info, and newsletter signup"
+  ],
+  "estimatedChallenges": [
+    {
+      "component": "Navigation",
+      "challenge": "Sticky navigation with mobile hamburger menu and active page highlighting",
+      "mitigation": "Use Next.js usePathname hook for active states, CSS position:sticky, and state management for mobile menu toggle. Ensure proper z-index layering."
+    },
+    {
+      "component": "MenuCategory & MenuItem",
+      "challenge": "Dynamic filtering and rendering of menu items with multiple categories and dietary filters",
+      "mitigation": "Use useState for filter state, useMemo for filtered results to optimize performance. Implement proper key props in map() functions. Create reusable MenuItem component."
+    },
+    {
+      "component": "OrderCart",
+      "challenge": "Complex state management for cart items, quantities, customizations, and total calculations",
+      "mitigation": "Use React Context or useState with reducer pattern for cart state. Implement proper add/remove/update functions. Calculate totals with useMemo to prevent unnecessary recalculations."
+    },
+    {
+      "component": "OrderForm",
+      "challenge": "Multi-step form with validation, item customization modals, and checkout flow",
+      "mitigation": "Break into smaller components (ItemCustomization, DeliveryDetails, PaymentInfo). Use controlled inputs with validation. Implement step navigation with state management."
+    },
+    {
+      "component": "ReservationForm",
+      "challenge": "Date/time picker integration with availability checking and form validation",
+      "mitigation": "Use date-fns for date manipulation. Create custom time slot component. Implement form validation with clear error messages. Consider using react-hook-form for complex validation."
+    },
+    {
+      "component": "TestimonialsCarousel",
+      "challenge": "Smooth carousel functionality with auto-play and manual controls",
+      "mitigation": "Use CSS transforms for smooth transitions. Implement useEffect for auto-play with cleanup. Add touch/swipe support for mobile. Ensure accessibility with keyboard navigation."
+    },
+    {
+      "component": "LocationMap",
+      "challenge": "Embedding Google Maps without API key issues and ensuring responsive sizing",
+      "mitigation": "Use iframe embed with proper aspect ratio container. Provide fallback static map image. Ensure responsive sizing with CSS. Add loading state."
+    },
+    {
+      "component": "ContactForm & ReservationForm",
+      "challenge": "Form validation, error handling, and submission without backend",
+      "mitigation": "Implement client-side validation with clear error messages. Use controlled components. Show success/error states. For demo, use console.log or local storage to simulate submission."
+    },
+    {
+      "component": "FeaturedDishes & MenuItem images",
+      "challenge": "Optimizing multiple food images for performance while maintaining quality",
+      "mitigation": "Use Next.js Image component with proper width/height. Implement lazy loading. Use placeholder blur. Consider using a consistent aspect ratio for all food images."
+    },
+    {
+      "component": "Mobile Responsiveness",
+      "challenge": "Ensuring all interactive elements (ordering, reservations) work seamlessly on mobile",
+      "mitigation": "Mobile-first approach with Tailwind breakpoints. Test touch interactions. Ensure form inputs are properly sized. Use mobile-friendly date/time pickers."
+    }
+  ],
+  "fixerContext": {
+    "expectedStructure": "Multi-page Next.js app with app router structure. Each page (home, menu, order, reservation, contact, location) should be in app/[pagename]/page.tsx. Shared components in components/ folder organized by feature (navigation/, forms/, menu/, etc.). Shared layout in app/layout.tsx with Navigation and Footer.",
+    "importPaths": "Use relative imports from page files (e.g., '@/components/Navigation'). Ensure all components are properly exported. Use TypeScript interfaces for props when beneficial.",
+    "fileStructure": {
+      "app": {
+        "layout.tsx": "Root layout with Navigation and Footer",
+        "page.tsx": "Home page",
+        "menu/page.tsx": "Menu page",
+        "order/page.tsx": "Order page",
+        "reservation/page.tsx": "Reservation page",
+        "contact/page.tsx": "Contact page",
+        "location/page.tsx": "Location page"
+      },
+      "components": {
+        "navigation": [
+          "Navigation.tsx",
+          "MobileMenu.tsx"
+        ],
+        "home": [
+          "Hero.tsx",
+          "FeaturedDishes.tsx",
+          "AboutSection.tsx",
+          "StatsSection.tsx",
+          "TestimonialsCarousel.tsx",
+          "CTABanner.tsx"
+        ],
+        "menu": [
+          "MenuCategory.tsx",
+          "MenuItem.tsx",
+          "MenuFilter.tsx"
+        ],
+        "order": [
+          "OrderCart.tsx",
+          "OrderForm.tsx",
+          "ItemCustomization.tsx",
+          "CheckoutForm.tsx"
+        ],
+        "reservation": [
+          "ReservationForm.tsx",
+          "DatePicker.tsx",
+          "TimeSlotSelector.tsx"
+        ],
+        "contact": [
+          "ContactForm.tsx",
+          "ContactInfo.tsx"
+        ],
+        "location": [
+          "LocationMap.tsx",
+          "HoursDisplay.tsx",
+          "DirectionsInfo.tsx"
+        ],
+        "shared": [
+          "Footer.tsx",
+          "Button.tsx",
+          "Input.tsx",
+          "Card.tsx"
+        ]
+      }
+    },
+    "commonIssues": [
+      "Missing 'use client' directive in components with interactivity (useState, onClick, etc.)",
+      "Import path mismatches - ensure @ alias is configured in tsconfig.json",
+      "Image optimization - always use next/image with proper width/height",
+      "Key prop warnings in mapped components - use unique identifiers",
+      "Hydration errors - ensure server and client render the same initial content",
+      "Form submission - prevent default behavior and handle client-side",
+      "Mobile menu state - ensure proper cleanup and body scroll lock",
+      "Date/time handling - use consistent timezone handling",
+      "Cart state persistence - consider localStorage for cart data",
+      "Responsive images - use srcSet or Next.js Image for different screen sizes"
+    ],
+    "designSystemNotes": {
+      "colors": {
+        "primary": "Warm brown/orange tones for brand identity",
+        "secondary": "Sage green for accents and CTAs",
+        "accent": "Deep burgundy for highlights",
+        "neutral": "Cream whites and soft grays for backgrounds",
+        "text": "Dark charcoal for readability"
+      },
+      "spacing": "Use Tailwind's spacing scale consistently (4, 8, 12, 16, 24, 32, 48, 64px)",
+      "borderRadius": "Moderate rounding (8-12px) for modern feel without being too playful",
+      "shadows": "Subtle shadows for depth, stronger shadows for elevated elements like modals",
+      "typography": {
+        "scale": "Use clear hierarchy: h1 (48-60px), h2 (36-42px), h3 (28-32px), body (16-18px)",
+        "lineHeight": "Generous line-height for readability (1.6-1.8 for body text)",
+        "fontWeight": "Bold for headings (600-700), regular for body (400), medium for emphasis (500)"
+      }
+    },
+    "interactionPatterns": {
+      "buttons": "Clear hover states, active states, disabled states. Primary buttons for main actions, secondary for alternatives",
+      "forms": "Inline validation, clear error messages, success states, loading states during submission",
+      "navigation": "Active page highlighting, smooth transitions, mobile menu slide-in animation",
+      "cards": "Subtle hover lift effect, clickable areas clearly indicated",
+      "modals": "Backdrop overlay, smooth fade-in, close on backdrop click or ESC key, focus trap",
+      "carousel": "Smooth transitions, pagination dots, arrow controls, auto-play with pause on hover"
+    },
+    "contentGuidelines": {
+      "menuItems": "Use appetizing descriptions (50-80 words), include key ingredients, highlight preparation methods, note dietary accommodations",
+      "testimonials": "Include customer name, date, star rating, and authentic-sounding review (30-60 words)",
+      "aboutSection": "Tell restaurant story, mention years in business, highlight chef or owner, emphasize quality and values (150-200 words)",
+      "ctaText": "Action-oriented and specific: 'Order Now', 'Reserve Your Table', 'View Full Menu', 'Get Directions'",
+      "hours": "Clear daily breakdown, note special holiday hours, include last seating time",
+      "contactInfo": "Phone with click-to-call, email with mailto, physical address with map link, social media handles"
+    },
+    "performanceOptimizations": {
+      "images": "Use WebP format, implement lazy loading, use appropriate sizes for different viewports, compress to <200KB",
+      "fonts": "Preload critical fonts, use font-display: swap, limit to 2-3 font families",
+      "code": "Code split by route, lazy load non-critical components, minimize bundle size",
+      "caching": "Leverage browser caching for static assets, use CDN for images",
+      "rendering": "Use static generation where possible, implement loading states for dynamic content"
+    },
+    "accessibilityRequirements": {
+      "navigation": "Keyboard accessible, skip to main content link, proper focus indicators",
+      "forms": "Label all inputs, provide error messages, use proper input types, ensure tab order",
+      "images": "Meaningful alt text for all images, decorative images with empty alt",
+      "colors": "Minimum 4.5:1 contrast ratio for text, 3:1 for large text and UI elements",
+      "interactive": "Minimum 44x44px touch targets, clear focus states, keyboard operable",
+      "semantics": "Proper heading hierarchy, landmark regions, ARIA labels where needed"
+    }
+  }
+}
